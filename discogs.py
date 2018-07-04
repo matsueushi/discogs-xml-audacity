@@ -46,6 +46,7 @@ def discogs_info_toxml(release):
         # print('%s - %02d %s.xml' % (release.title, i, t.title))
         # print(disc_info_xml.toprettyxml())
         file_name = '%s - %02d %s.xml' % (release.title, i, t.title)
+        file_name = re.sub('/', '_', file_name)
         info[file_name] = disc_info_xml
     return info
 
@@ -69,5 +70,5 @@ def download_album_info(discogs_id):
     print('complete!')
 
 
-discogs_id = 164524
+discogs_id = 1147938
 download_album_info(discogs_id)
