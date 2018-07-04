@@ -1,4 +1,5 @@
 import discogs_client
+import re
 import os
 import urllib
 import xml.dom.minidom
@@ -29,7 +30,8 @@ def discogs_info_toxml(release):
     disc_info_dic = {}
     disc_info_dic['YEAR'] = release.year
     disc_info_dic['GENRE'] = release.genres[0]
-    disc_info_dic['ARTIST'] = release.artists[0].name
+    # remove " (*)" of "artist name (*)"
+    disc_info_dic['ARTIST'] = re.sub(' \(\d\)$', '', release.artists[0].name)
     disc_info_dic['ALBUM'] = release.title
 
     for i, t in enumerate(release.tracklist):
