@@ -1,8 +1,15 @@
 import discogs_client
 import os
+import urllib
 import xml.dom.minidom
+from dotenv import load_dotenv, find_dotenv
 
-d = discogs_client.Client('AudacityTagDiscogs/0.1')
+load_dotenv(find_dotenv())
+
+SAVE_PATH = os.getenv('SAVE_PATH')
+USER_TOKEN = os.getenv('USER_TOKEN')
+
+d = discogs_client.Client('AudacityTagDiscogs/0.1', user_token=USER_TOKEN)
 
 
 def audacity_tag(name, val):
@@ -17,9 +24,8 @@ def audacity_tag(name, val):
     return subnode
 
 
-def discogs_info_toxml(discogs_id):
+def discogs_info_toxml(release):
     info = {}
-    release = d.release(discogs_id)
     disc_info_dic = {}
     disc_info_dic['YEAR'] = release.year
     disc_info_dic['GENRE'] = release.genres[0]
@@ -42,10 +48,24 @@ def discogs_info_toxml(discogs_id):
     return info
 
 
-path = '/Users/matsueushi/Documents/audacity'
+def download_album_info(discogs_id):
+    release = d.release(discogs_id)
+    image_url = release.images[0]['uri']
+
+    for file_name, x in discogs_info_toxml(release).items():
+        xml_string = x.toprettyxml()
+        with open(os.path.join(SAVE_PATH, file_name), 'w') as f:
+            f.write(xml_string)
+
+    try:
+        image_name = '%s.jpg' % release.title
+        urllib.request.urlretrieve(
+            image_url, os.path.join(SAVE_PATH, image_name))
+    except:
+        sys.exit('Unable to download image')
+
+    print('complete!')
+
+
 discogs_id = 520337
-for file_name, x in discogs_info_toxml(discogs_id).items():
-    xml_string = x.toprettyxml()
-    with open(os.path.join(path, file_name), 'w') as f:
-        f.write(xml_string)
-print('complete!')
+download_album_info(discogs_id)
