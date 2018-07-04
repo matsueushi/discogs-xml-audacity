@@ -29,8 +29,8 @@ def discogs_info_toxml(release):
     disc_info_dic = {}
     disc_info_dic['YEAR'] = release.year
     disc_info_dic['GENRE'] = release.genres[0]
+    disc_info_dic['ARTIST'] = release.artists[0].name
     disc_info_dic['ALBUM'] = release.title
-    disc_info_dic['ARTISTS'] = release.artists[0].name
 
     for i, t in enumerate(release.tracklist):
         disc_info_xml = xml.dom.minidom.Document()
@@ -67,5 +67,5 @@ def download_album_info(discogs_id):
     print('complete!')
 
 
-discogs_id = 520337
+discogs_id = 164524
 download_album_info(discogs_id)
