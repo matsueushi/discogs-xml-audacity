@@ -66,7 +66,7 @@ def download_album_info(discogs_id):
 
     for file_name, x in discogs_info_toxml(release).items():
         xml_string = x.toprettyxml()
-        with open(os.path.join(sub_save_path, file_name), 'w') as f:
+        with open(os.path.join(sub_save_path, file_name), 'w', encoding='utf-8') as f:
             f.write(xml_string)
 
     try:
