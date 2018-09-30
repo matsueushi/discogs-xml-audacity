@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 import sys
+import os
 import discogs_client
 import re
-import os
 import urllib
 import xml.dom.minidom
 from dotenv import load_dotenv, find_dotenv
@@ -11,6 +11,7 @@ load_dotenv(find_dotenv())
 
 SAVE_PATH = os.getenv('SAVE_PATH')
 USER_TOKEN = os.getenv('USER_TOKEN')
+FILE_NAME_TEMPLATE = os.getenv('FILE_NAME_TEMPLATE')
 
 d = discogs_client.Client('AudacityTagDiscogs/0.1', user_token=USER_TOKEN)
 
@@ -49,10 +50,10 @@ def discogs_info_toxml(release):
         for name, val in disc_info_dic.items():
             tags.appendChild(audacity_tag(name, val))
 
-        print('%s - %02d %s.xml' % (release.title, i, t.title))
         # print(disc_info_xml.toprettyxml())
-        file_name = '%s - %02d %s.xml' % (release.title, i + 1, t.title)
+        file_name = FILE_NAME_TEMPLATE % (release.title, i + 1, t.title)
         file_name = re.sub('/', '_', file_name)
+        print(file_name)
         info[file_name] = disc_info_xml
     return info
 
@@ -67,7 +68,8 @@ def download_album_info(discogs_id):
 
     for file_name, x in discogs_info_toxml(release).items():
         xml_string = x.toprettyxml()
-        with open(os.path.join(sub_save_path, file_name), 'w', encoding='utf-8') as f:
+        with open(os.path.join(sub_save_path, file_name),
+                  'w', encoding='utf-8') as f:
             f.write(xml_string)
 
     try:
