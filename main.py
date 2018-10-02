@@ -13,7 +13,7 @@ SAVE_PATH = os.getenv('SAVE_PATH')
 USER_TOKEN = os.getenv('USER_TOKEN')
 FILE_NAME_TEMPLATE = os.getenv('FILE_NAME_TEMPLATE')
 
-d = discogs_client.Client('AudacityTagDiscogs/0.1', user_token=USER_TOKEN)
+d = discogs_client.Client('xml-for-audacity/0.1', user_token=USER_TOKEN)
 
 
 def trim_artist_name(name):
@@ -51,7 +51,16 @@ def discogs_info_toxml(release):
             tags.appendChild(audacity_tag(name, val))
 
         # print(disc_info_xml.toprettyxml())
-        file_name = FILE_NAME_TEMPLATE % (release.title, i + 1, t.title)
+        file_name_dict = {
+                "artist": trim_artist_name(release.artists[0].name),
+                "album": release.title,
+                "number": i + 1,
+                "song": t.title}
+        try:
+            file_name = FILE_NAME_TEMPLATE.format(**file_name_dict)
+        except KeyError:
+            file_name = "{number:02} {song}.xml".format(
+                    **file_name_dict)
         file_name = re.sub('/', '_', file_name)
         print(file_name)
         info[file_name] = disc_info_xml
@@ -62,7 +71,7 @@ def download_album_info(discogs_id):
     release = d.release(discogs_id)
     image_url = release.images[0]['uri']
     artist_name = trim_artist_name(release.artists[0].name)
-    sub_save_path = os.path.join(SAVE_PATH, artist_name)
+    sub_save_path = os.path.join(SAVE_PATH, artist_name, release.title)
     if not os.path.exists(sub_save_path):
         os.makedirs(sub_save_path)
 
