@@ -3,8 +3,20 @@ Xml generator for audacity using discogs API
 
 ## Usage
 
-1. Find URL for the release (e.g. <https://www.discogs.com/New-Order-Blue-Monday/release/20755>)
-2. $ python main.py id (e.g. 20755) 
+**Setup**
+1. [Get your personal access token of Discogs](https://www.discogs.com/settings/developers)
+2. Rename *.env.sample* as *.env* and edit
+```
+USER_TOKEN=(your access token)
+SAVE_PATH=(save folder)
+```
+
+**Fetching Data**
+1. Find URL for a release (e.g. <https://www.discogs.com/New-Order-Blue-Monday/release/20755>)
+2. Run
+```
+$ python main.py id (e.g. 20755) 
+```
 
 ## Requirement
 
