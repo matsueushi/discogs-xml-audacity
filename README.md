@@ -1,5 +1,6 @@
 # xml-for-audacity
-Xml generator for audacity using discogs API
+
+[Audacity matadata tags xml](https://manual.audacityteam.org/man/metadata_editor.html) generator using discogs API
 
 ## Usage
 
