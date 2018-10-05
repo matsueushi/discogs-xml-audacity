@@ -67,9 +67,18 @@ def discogs_info_toxml(release):
     return info
 
 
+def download_album_artwork(release, save_path):
+    image_url = release.images[0]['uri']
+    try:
+        image_name = '%s.jpg' % release.title
+        urllib.request.urlretrieve(
+            image_url, os.path.join(save_path, image_name))
+    except:
+        sys.exit('Unable to download image')
+
+
 def download_album_info(discogs_id):
     release = d.release(discogs_id)
-    image_url = release.images[0]['uri']
     artist_name = trim_artist_name(release.artists[0].name)
     sub_save_path = os.path.join(SAVE_PATH, artist_name, release.title)
     if not os.path.exists(sub_save_path):
@@ -81,12 +90,7 @@ def download_album_info(discogs_id):
                   'w', encoding='utf-8') as f:
             f.write(xml_string)
 
-    try:
-        image_name = '%s.jpg' % release.title
-        urllib.request.urlretrieve(
-            image_url, os.path.join(sub_save_path, image_name))
-    except:
-        sys.exit('Unable to download image')
+    download_album_artwork(release, sub_save_path)
 
     print('complete!')
 

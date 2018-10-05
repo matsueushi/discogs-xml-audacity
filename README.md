@@ -7,17 +7,16 @@ Download metadata xml for [Audacity matadata editor](https://manual.audacityteam
 
 **Setup**
 1. [Get your personal access token of Discogs](https://www.discogs.com/settings/developers)
-2. Rename *.env.sample* as *.env* and edit
+2. Rename *.env.sample* as *.env* and set your user token 
 ```
 USER_TOKEN=(your access token)
-SAVE_PATH=(save folder)
 ```
 
 **Fetching Data**
-1. Find URL for a release (e.g. <https://www.discogs.com/New-Order-Blue-Monday/release/20755>)
-2. Run
+1. Find URL for a release. If the URL is <https://www.discogs.com/New-Order-Blue-Monday/release/20755>, the unique id of this release is 20755.
+2. Run the command
 ```
-$ python main.py id (e.g. 20755)
+$ python main.py unique_id
 ```
 
 ## Requirement
