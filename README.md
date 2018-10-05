@@ -2,6 +2,7 @@
 
 Download metadata xml for [Audacity matadata editor](https://manual.audacityteam.org/man/metadata_editor.html) and album artwork using discogs API
 ![screenshot](https://user-images.githubusercontent.com/28841596/46452843-063f3080-c76c-11e8-91c4-1823e768a7de.png)
+![audacity_metadata_screenshot](https://user-images.githubusercontent.com/28841596/46511727-3e06b080-c81e-11e8-9e21-c45f6b7671a0.png)
 
 ## Usage
 
