@@ -4,6 +4,6 @@ discogs-client==2.2.1
 idna==2.7
 oauthlib==2.1.0
 python-dotenv==0.9.1
-requests==2.19.1
+requests==2.20.1
 six==1.11.0
 urllib3==1.23
